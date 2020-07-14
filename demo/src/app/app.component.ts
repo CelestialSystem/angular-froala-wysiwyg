@@ -92,19 +92,6 @@ import FroalaEditor from 'froala-editor';
       <h2>Sample 11: Add Custom Button</h2>
       <div  id="sample11" [froalaEditor]="options" [(froalaModel)]="content" ></div>
     </div>
-    <div class="sample">
-      <h2>sample 12 same functionality same code in one page</h2>
-      <h3>Model-Binding-Check:</h3>
-        <h4>First</h4>
-        <div [froalaEditor]="getOptions()" [(froalaModel)]="firstModel.details"></div>
-
-        <p>{{firstModel.details}}</p>
-        <h4>Second</h4>
-        <div [froalaEditor]="getOptions()" (ngModel)="newNameTwo" [(froalaModel)]="model.details"></div>
-
-        <p>{{model.details}}</p>
-
-    </div>
 
   `
 })
@@ -224,96 +211,4 @@ export class AppComponent implements OnInit {
     toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat','alert'],
     toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat','alert'],
   };
-  // Sample 12
-  // same code same functionality in one editor
-
-  public firstModel: any = {
-    details:
-      '<p>nothing inserted yet.</p><p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>'
-  };
-  public model: any = {
-    details:
-      '<p>nothing inserted yet.</p><p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>'
-  };
-  
-
-  public getOptions(): any {
-    return JSON.parse(JSON.stringify(this.froalaOptions));
-  }
-  froalaOptions: Object = {
-    charCounterCount: false,
-    fileUpload: false,
-    attribution: false,
-    toolbarButtons: [
-      [
-        "fullscreen",
-        "bold",
-        "italic",
-        "underline",
-        "strikeThrough",
-        "subscript",
-        "superscript"
-      ],
-      ["fontFamily", "fontSize", "backgroundColor", "textColor"],
-      [
-        "paragraphFormat",
-        "align",
-        "formatOL",
-        "formatUL",
-        "outdent",
-        "indent",
-        "-",
-        "insertImage",
-        "embedly",
-        "insertTable",
-        "insertLink"
-      ],
-      ["specialCharacters", "insertHR", "clearFormatting"],
-      ["print", "spellChecker"],
-      ["undo", "redo"]
-    ],
-    toolbarSticky: false,
-    language: "de",
-    fontFamily: {
-      "Arial,Helvetica,sans-serif": "Arial",
-      "'Courier New',Courier,monospace": "Courier New",
-      "Georgia,serif": "Georgia",
-      "Impact,Charcoal,sans-serif": "Impact",
-      "'Lucida Console',Monaco,monospace": "Lucida Console",
-      "Tahoma,Geneva,sans-serif": "Tahoma",
-      "'Times New Roman',Times,serif": "Times New Roman",
-      "Verdana,Geneva,sans-serif": "Verdana"
-    },
-    events: {
-      "froalaEditor.image.beforeUpload": function(e, editor, files) {
-        if (files.length) {
-          // Create a File Reader.
-          const reader = new FileReader();
-
-          // Set the reader to insert images when they are loaded.
-          reader.onload = function(eLoad) {
-            const result = (<any>eLoad.target).result;
-            editor.image.insert(result, null, null, editor.image.get());
-          };
-
-          // Read image as base64.
-          reader.readAsDataURL(files[0]);
-        }
-
-        editor.popups.hideAll();
-
-        // Stop default upload chain.
-        return false;
-      },
-      contentChanged: () => {
-        // Nothing
-        //console.log('contentChanged', this.model.details);
-      }
-    }
-  };
-
-  newModel() {
-    this.model = {};
-  }
-  
 }
